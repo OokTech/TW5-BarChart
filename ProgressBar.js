@@ -96,7 +96,7 @@ ProgressBar.prototype.execute = function() {
 	for (var segment in segments) {
 		//If the color list is shorter than the number of segments than the
 		//list loops.
-		thisColor = colorList[segment%colorList.length];
+		thisColor = colorList[(segment-1)%colorList.length];
 		//Only add a new segment if has a non-zero length
 		if (segments[segment] > 0) {
 			//Each segment is a div
