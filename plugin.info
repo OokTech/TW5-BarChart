@@ -1,0 +1,10 @@
+{
+	"title": "$:/plugins/OokTech/BarChart",
+	"description": "A plugin to add simple bar charts to tiddlywiki",
+	"author": "OokTech",
+	"version": "0.0.2",
+	"core-version": ">=5.1.13",
+	"source": "",
+	"list": "[[$:/plugins/OokTech/BarChart/ReadMe]]",
+	"plugin-type": "plugin"
+}

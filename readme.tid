@@ -1,0 +1,13 @@
+title: $:/plugins/OokTech/BarChart/readme
+
+This plugin adds the ~ProgressBar widget to ~TiddlyWiki.
+
+This widget can be used to make progress bars to show a percentage finished/unfinished bar, or it can be used to show a stacked bar chart.
+
+Multiple widgets can be stacked to make a normal barchart as well, with one widget for each bar displayed.
+
+License: [[BSD 3 Clause|$:/plugins/OokTech/BarChart/License]]
+
+Creator: [[OokTech|$:/plugins/OokTech/OokTechInfo]]
+
+Source: [[GitHub|https://https://github.com/OokTech/TW5-BarChart]]
