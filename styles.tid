@@ -1,21 +1,92 @@
 title: $:/plugins/OokTech/BarChart/Styles
 tags: $:/tags/Stylesheet
 
-.progress-bar {
-    width: 100%;
+.progress-bar-horizontal {
+
 }
 
-.progress-bar > div:first-child {
+.progress-bar-horizontal > div > div:first-child {
     border-top-left-radius:4px;
     border-bottom-left-radius:4px;
 }
 
-.progress-bar> div:last-child {
+.progress-bar-horizontal > div > div:last-child {
     border-top-right-radius:4px;
     border-bottom-right-radius:4px;
 }
 
-.progress-bar > div {
+.progress-bar-horizontal > div > div {
     display:inline-block;
     text-align:center;
+}
+
+.bar-chart-horizontal-left > div:nth-child(1n) {
+    border-top-right-radius:15%;
+    border-bottom-right-radius:15%;
+    display: inline-flex;
+    align-items: center;
+}
+
+.bar-chart-horizontal-right > div:nth-child(1n) {
+    border-top-left-radius:15%;
+    border-bottom-left-radius:15%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.progress-bar-vertical {
+
+}
+
+.progress-bar-vertical > div:first-child {
+    border-top-left-radius:4px;
+    border-top-right-radius:4px;
+}
+
+.progress-bar-vertical > div:last-child {
+    border-bottom-left-radius:4px;
+    border-bottom-right-radius:4px;
+}
+
+.bar-chart {
+
+}
+
+.bar-chart > div {
+    display:inline-block;
+}
+
+.bars-right-align {
+    text-align:right;
+}
+
+.bars-right-align > div > div {
+    margin-left:auto;
+    margin-right:0px;
+}
+
+.bars-top-align {
+    position: relative;
+    top:0px;
+    right:0px;
+}
+
+.bars-top-align > div > div {
+    position: absolute;
+    top: 0px;
+    text-align: center;
+}
+
+.bars-bottom-align {
+    position: relative;
+    top:0px;
+    right:0px;
+}
+
+.bars-bottom-align > div > div {
+    position: absolute;
+    bottom: 0px;
+    text-align: center;
+    vertical-align: bottom;
 }

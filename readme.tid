@@ -6,6 +6,38 @@ This widget can be used to make progress bars to show a percentage finished/unfi
 
 Multiple widgets can be stacked to make a normal barchart as well, with one widget for each bar displayed.
 
+Simple Usage:
+
+`<$ProgressBar finished=<<FinishedFilter>> unfinished=<<UnfinishedFilter>>/>`
+
+Advanced Usage:
+
+```
+<$ProgressBar
+    filters='[[Filter1]],[[Filter2]]'
+    colors='Color1,Color2'
+    mode=SomeMode
+    orientation='horizontal'
+    class='bar-class'
+    width=WidthValue
+    height=HeightValue
+    unit=WidthHeightUnit
+/>
+```
+
+|!Parameter |!Description |!Default Value |
+|!finished |A filter that lists all the things that are finished. If `filters` has a value this is ignored. |`[tag[task]tag[done]]` |
+|!unfinished |A filter that lists all the things that are not finished. If `filters` has a value this is ignored. |`[tag[task]!tag[done]]` |
+|!filters |A comma separated list of filters, each filter defines one section of the bar created. If this has a value than `finished` and `unfinished` are ignored. |No Default |
+|!colors |A comma separated list of css colors that defines the colors for each part of the bar. If there are fewer colors than sections of the bar than the colors loop. |`red, green` |
+|!mode |This sets if the bar is `stacked` or `sidebyside` |`stacked` |
+|!orientation |This sets if the bars are `horizontal` or `vertical` |`horizontal` |
+|!class |An optional css class. |`progress-bar` |
+|!width |The width of the full chart, used when orientation is `horizontal` |`100` |
+|!height |The height of the full chart, used when the orientation is `vertical` |`100` |
+|!unit |The css unit that the width and height are measured in. |`%` |
+
+
 License: [[BSD 3 Clause|$:/plugins/OokTech/BarChart/License]]
 
 Creator: [[OokTech|$:/plugins/OokTech/OokTechInfo]]

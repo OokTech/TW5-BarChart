@@ -71,9 +71,16 @@ ProgressBar.prototype.execute = function() {
 	this.unfinishedFilter = this.getAttribute("unfinished", '[tag[task]!tag[done]]');
 	this.filters = this.getAttribute("filters");
 	var TotalWidth = this.getAttribute("width","100");
-	var widthUnit = this.getAttribute("unit", "%");
+	var TotalHeight = this.getAttribute("height","1.5");
+	var widthUnit = this.getAttribute("width-unit", "%");
+	var heightUnit = this.getAttribute("height-unit", "em");
 	var colors = this.getAttribute("colors");
-	var barClass = this.getAttribute("class", "progress-bar");
+	var barClass = this.getAttribute("class");
+	var mode = this.getAttribute("mode", "stacked");
+	var orientation = this.getAttribute("orientation", "horizontal");
+	var side = this.getAttribute("side", "left");
+	var vertical = this.getAttribute("vertical", "bottom");
+	var label = this.getAttribute("label", "%");
 
 	//This updates the current state of the bar
 	var Total = this.GetBarState();
@@ -81,8 +88,8 @@ ProgressBar.prototype.execute = function() {
 	this.OldBarState = this.BarState;
 
 	//Initialise colors
-	var colorList = ['red','green'];
-	var thisColor = 'red';
+	var colorList = ['ForestGreen','FireBrick','CadetBlue','Aquamarine'];
+	var thisColor = 'ForestGreen';
 	//Get the list of colors, if any. If there isn't a color list given the
 	//default defined above is used.
 	if (colors) {
@@ -91,20 +98,71 @@ ProgressBar.prototype.execute = function() {
 
 	var segments = this.BarState.split(",");
 	//Build the html for making the progress bar
-	var ProgressBarString = "<div class='progress-bar'>";
-	//Add each segment to the bar in order
+	//Outer div that sets the full height and width
+	var ProgressBarString = "<div style='height:" + TotalHeight + heightUnit + ";width:" + TotalWidth + widthUnit + ";'>";
+	//Inner div that sets the classes
+	ProgressBarString += "<div class='bar-chart " + barClass;
+	if (side === "right" && orientation !== "vertical") {
+		ProgressBarString += " bars-right-align ";
+	} else {
+		ProgressBarString += " bars-left-align ";
+	}
+	if (vertical === "bottom") {
+		ProgressBarString += " bars-bottom-align ";
+	} else {
+		ProgressBarString += " bars-top-align ";
+	}
+
+	ProgressBarString += "' style='width:inherit;height:inherit;'>";
+	var displayLabel = "&nbsp;";
+	//Add each segment/bar to the bar in order
 	for (var segment in segments) {
+		//Create the label for the bar, if any
+		if (label === "%") {
+			displayLabel = Math.round(segments[segment]/Total*100) + '%';
+		} else if (label === "n") {
+			displayLabel = segments[segment];
+		} else if (label === "nofm") {
+			displayLabel = segments[segment] + " of " + Total;
+		}
+		//Bar Dimension is the height for horizontal thing and the width for vertical things (the non-data dimension)
+		var BarDimension = (mode === 'bars')?100/segments.length:100;
+		//This is the largest value from the values for the bars.
+		var Maximum = (mode === "bars")?Math.max.apply(null, segments):Total;
+		//Bar size is the height for vertical things and the width for horizontal things (the data dimension)
+		var BarSize = segments[segment]/Maximum*100;
+		var DataDimension = (orientation === 'vertical')?"height":"width";
+		var OtherDimension = (orientation === 'vertical')?"width":"height";
 		//If the color list is shorter than the number of segments than the
 		//list loops.
-		thisColor = colorList[(segment-1)%colorList.length];
-		//Only add a new segment if has a non-zero length
-		if (segments[segment] > 0) {
-			//Each segment is a div
-			ProgressBarString += "<div style='width:" + segments[segment]/Total*100 + "%;background-color:" + thisColor + ";'>" + Math.round(segments[segment]/Total*100) + "%</div>";
+		thisColor = colorList[segment%colorList.length];
+
+		var PrefixString = "";
+		var SuffixString = "";
+		var displayPart = "";
+		var TextAlign = "";
+
+		if (mode === 'bars') {
+			if (orientation === 'vertical') {
+				PrefixString = "<div style='height:100%;width:" + BarDimension + "%;'>";
+				SuffixString = "</div>";
+				displayPart = "display:inline-block;";
+				TextAlign = "text-align:center;";
+			} else {
+				SuffixString = "<br/>";
+			}
+		} else {
+			TextAlign = "text-align:center";
+		}
+
+		//If the segment is longer than 0 or in bar mode add the segment.
+		if (segments[segment] > 0 || mode === 'bars') {
+			//Create the next part of the bar
+			ProgressBarString += PrefixString + "<div style='" + DataDimension + ":" + BarSize + "%;" + OtherDimension + ":" + BarDimension + "%;background-color:" + thisColor + ";" + displayPart + ";" + TextAlign + ";'>" + displayLabel + "</div>" + SuffixString;
 		}
 	}
-	//Close the div
-	ProgressBarString += "</div>";
+	//Close the outer divs
+	ProgressBarString += "</div></div>";
 
 	//This is the part that actually displays the bar in the wiki
 	var parser = this.wiki.parseText("text/vnd.tiddlywiki",ProgressBarString,{parseAsInline: false});
@@ -135,7 +193,10 @@ ProgressBar.prototype.GetBarState = function () {
 	for (var filter in filterList) {
 		currentSegment = this.wiki.filterTiddlers(filterList[filter]).length;
 		Total += currentSegment;
-		this.BarState += "," + String(currentSegment);
+		if (this.BarState !== "") {
+			this.BarState += ",";
+		}
+		this.BarState += String(currentSegment);
 	}
 	return Total;
 }

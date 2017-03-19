@@ -1,0 +1,272 @@
+title: Bar Chart Creator
+
+\define thisInnerShowCode() <$~ProgressBar
+
+\define thisShowCode(code:ProgressBar)
+<pre>
+<<thisInnerShowCode>>
+    filters=<$text text='"""'/>{{$:/temp/InteractiveDemo!!filters}}<$text text='"""'/>
+    colors=<$text text='"""'/>{{$:/temp/InteractiveDemo!!colors}}<$text text='"""'/>
+    mode=<$text text='"'/>{{$:/temp/InteractiveDemo!!mode}}<$text text='"'/>
+    orientation=<$text text='"'/>{{$:/temp/InteractiveDemo!!orientation}}<$text text='"'/>
+    side=<$text text='"'/>{{$:/temp/InteractiveDemo!!side}}<$text text='"'/>
+    class=<$text text='"'/>{{$:/temp/InteractiveDemo!!class}}<$text text='"'/>
+    width=<$text text='"'/>{{$:/temp/InteractiveDemo!!width}}<$text text='"'/>
+    width-unit=<$text text='"'/>{{$:/temp/InteractiveDemo!!width-unit}}<$text text='"'/>
+    height=<$text text='"'/>{{$:/temp/InteractiveDemo!!height}}<$text text='"'/>
+    height-unit=<$text text='"'/>{{$:/temp/InteractiveDemo!!height-unit}}<$text text='"'/>
+    vertical=<$text text='"'/>{{$:/temp/InteractiveDemo!!vertical}}<$text text='"'/>
+    label=<$text text='"'/>{{$:/temp/InteractiveDemo!!label}}<$text text='"'/>
+/>
+</pre>
+\end
+
+This is both a demo of the sort of charts you can make using this plugin and a tool for creating charts without having to remember the syntax. Just select the options you want below and then copy the code into a tiddler where you want the chart.
+
+<table style='width:100%'>
+    <tr>
+        <th>
+            filters
+        </th>
+        <td
+            colspan=2
+        >
+            <$edit-text
+                tiddler='$:/temp/InteractiveDemo'
+                field='filters'
+                class='tc-edit-texteditor'
+            />
+        </td>
+    </tr>
+    <tr>
+        <th>
+            colors
+        </th>
+        <td
+            colspan=2
+        >
+            <$edit-text
+                tiddler='$:/temp/InteractiveDemo'
+                field='colors'
+                class='tc-edit-texteditor'
+            />
+        </td>
+    </tr>
+    <tr>
+        <th>
+            orientation
+        </th>
+        <td>
+            <$radio
+                tiddler='$:/temp/InteractiveDemo'
+                field='orientation'
+                value='vertical'
+            >
+                vertical
+            </$radio>
+        </td>
+        <td>
+            <$radio
+                tiddler='$:/temp/InteractiveDemo'
+                field='orientation'
+                value='horizontal'
+            >
+                horizontal
+            </$radio>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            mode
+        </th>
+        <td>
+            <$radio
+                tiddler='$:/temp/InteractiveDemo'
+                field='mode'
+                value='stacked'
+            >
+                stacked
+            </$radio>
+        </td>
+        <td>
+            <$radio
+                tiddler='$:/temp/InteractiveDemo'
+                field='mode'
+                value='bars'
+            >
+                bars
+            </$radio>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            side
+        </th>
+        <td>
+            <$radio
+                tiddler='$:/temp/InteractiveDemo'
+                field='side'
+                value='left'
+            >
+                left
+            </$radio>
+        </td>
+        <td>
+            <$radio
+                tiddler='$:/temp/InteractiveDemo'
+                field='side'
+                value='right'
+            >
+                right
+            </$radio>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            vertical
+        </th>
+        <td>
+            <$radio
+                tiddler='$:/temp/InteractiveDemo'
+                field='vertical'
+                value=top
+            >
+                top
+            </$radio>
+        </td>
+        <td>
+            <$radio
+                tiddler='$:/temp/InteractiveDemo'
+                field='vertical'
+                value='bottom'
+            >
+                bottom
+            </$radio>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            width
+        </th>
+        <td>
+            <$edit-text
+                tiddler='$:/temp/InteractiveDemo'
+                field='width'
+                class='tc-edit-texteditor'
+            />
+        </td>
+        <td>
+            <$select
+                tiddler='$:/temp/InteractiveDemo'
+                field='width-unit'
+            >
+                <$list
+                    filter='% em px ex cm mm in pt pc ch rem vw vh vmin vmax'
+                >
+                    <option>
+                        <<currentTiddler>>
+                    </option>
+                </$list>
+            </$select>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            height
+        </th>
+        <td>
+            <$edit-text
+                tiddler='$:/temp/InteractiveDemo'
+                field='height'
+                class='tc-edit-texteditor'
+            />
+        </td>
+        <td>
+            <$select
+                tiddler='$:/temp/InteractiveDemo'
+                field='height-unit'
+            >
+                <$list
+                    filter='% em px ex cm mm in pt pc ch rem vw vh vmin vmax'
+                >
+                    <option>
+                        <<currentTiddler>>
+                    </option>
+                </$list>
+            </$select>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            label
+        </th>
+        <td
+            colspan=2
+        >
+            <$select
+                tiddler='$:/temp/InteractiveDemo'
+                field='label'
+            >
+                <option
+                    value=''
+                >
+                    //None//
+                </option>
+                <$list
+                    filter='% n nofm'
+                >
+                    <option>
+                        <<currentTiddler>>
+                    </option>
+                </$list>
+            </$select>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            class
+        </th>
+        <td
+            colspan=2
+        >
+            <$select
+                tiddler='$:/temp/InteractiveDemo'
+                field='class'
+            >
+                <option
+                    value=''
+                >
+                    //Default//
+                </option>
+                <$list
+                    filter='progress-bar-vertical progress-bar-horizontal bar-chart-horizontal-left bar-chart-horizontal-right'
+                >
+                    <option>
+                        <<currentTiddler>>
+                    </option>
+                </$list>
+            </$select>
+        </td>
+    </tr>
+</table>
+
+
+Code:
+
+<<thisShowCode>>
+
+
+<$ProgressBar
+    filters={{$:/temp/InteractiveDemo!!filters}}
+    colors={{$:/temp/InteractiveDemo!!colors}}
+    mode={{$:/temp/InteractiveDemo!!mode}}
+    orientation={{$:/temp/InteractiveDemo!!orientation}}
+    side={{$:/temp/InteractiveDemo!!side}}
+    class={{$:/temp/InteractiveDemo!!class}}
+    width={{$:/temp/InteractiveDemo!!width}}
+    width-unit={{$:/temp/InteractiveDemo!!width-unit}}
+    height={{$:/temp/InteractiveDemo!!height}}
+    height-unit={{$:/temp/InteractiveDemo!!height-unit}}
+    vertical={{$:/temp/InteractiveDemo!!vertical}}
+    label={{$:/temp/InteractiveDemo!!label}}
+/>
